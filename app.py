@@ -1,4 +1,5 @@
 import parser
+import math
 from tkinter import *
 
 # create basic window
@@ -37,22 +38,37 @@ def button_click(num):
 def button_clear():
     txtDisplay.delete(0, END)
 
-def button_add():
+def button_operation(op):
     first_num = txtDisplay.get()
     global f_num
-    f_num = int(first_num)
+    global task
+    task = op
+    f_num = int(float(first_num))
     txtDisplay.delete(0, END)
 
 def button_equal():
     second_num = txtDisplay.get()
     txtDisplay.delete(0, END)
-    txtDisplay.insert(0, f_num + int(second_num))
+
+    if task == "add":
+        txtDisplay.insert(0, f_num + int(second_num))
+    if task == "sub":
+        txtDisplay.insert(0, f_num - int(second_num))
+    if task == "multi":
+        txtDisplay.insert(0, f_num * int(second_num))
+    if task == "div":
+        txtDisplay.insert(0, f_num / int(second_num))
+
+def button_square():
+    sq = int(txtDisplay.get())
+    txtDisplay.delete(0, END)
+    txtDisplay.insert(0, sq * sq)
 
 # pi number
-# def button_pi():
-#     pi = 3.14159265359
-#     txtDisplay.delete(0, END)
-#     txtDisplay.insert(0, pi)
+def button_pi():
+    pi = math.pi
+    txtDisplay.delete(0, END)
+    txtDisplay.insert(0, pi)
 
 # fill the grid
 numberpad = "789456123"
@@ -75,16 +91,16 @@ btnAllClear.grid(row=1, column=1, pady=1)
 btnSqrRoot = Button(calc, text="√", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
 btnSqrRoot.grid(row=1, column=2, pady=1)
 
-btnAdd = Button(calc, text="+", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_add())
+btnAdd = Button(calc, text="+", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_operation("add"))
 btnAdd.grid(row=1, column=3, pady=1)
 
-btnMinus = Button(calc, text="-", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnMinus = Button(calc, text="-", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_operation("sub"))
 btnMinus.grid(row=2, column=3, pady=1)
 
-btnTimes = Button(calc, text="*", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
-btnTimes.grid(row=3, column=3, pady=1)
+btnMulti = Button(calc, text="*", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_operation("multi"))
+btnMulti.grid(row=3, column=3, pady=1)
 
-btnDivide = Button(calc, text="÷", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnDivide = Button(calc, text="÷", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_operation("div"))
 btnDivide.grid(row=4, column=3, pady=1)
 
 btnZero = Button(calc, text="0", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_click("0"))
@@ -93,13 +109,13 @@ btnZero.grid(row=5, column=0, pady=1)
 btnDot = Button(calc, text=".", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
 btnDot.grid(row=5, column=1, pady=1)
 
-btnSqr = Button(calc, text="²", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnSqr = Button(calc, text="²", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_square())
 btnSqr.grid(row=5, column=3, pady=1)
 
 btnEq = Button(calc, text="=", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#CCA871', fg='#1E1F21', command=lambda:button_equal())
 btnEq.grid(row=5, column=2, pady=1)
 
-btnPi = Button(calc, text="π", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnPi = Button(calc, text="π", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_pi())
 btnPi.grid(row=1, column=4, pady=1)
 
 btnSin = Button(calc, text="Sin", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
