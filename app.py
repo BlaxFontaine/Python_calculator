@@ -87,7 +87,7 @@ btnTimes.grid(row=3, column=3, pady=1)
 btnDivide = Button(calc, text="÷", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
 btnDivide.grid(row=4, column=3, pady=1)
 
-btnZero = Button(calc, text="0", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnZero = Button(calc, text="0", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_click("0"))
 btnZero.grid(row=5, column=0, pady=1)
 
 btnDot = Button(calc, text=".", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
