@@ -25,14 +25,36 @@ calc.grid()
 
 txtDisplay = Entry(calc, font=("Courier", 20, "bold"), bg='#1E1F21', fg='#CCA871', bd=20, width=28, justify=RIGHT)
 txtDisplay.grid(row=0, column=0, columnspan=9, pady=1)
-txtDisplay.insert(0, "0")
+txtDisplay.insert(0, "")
 
+# function on click
 def button_click(num):
-    # num = int(num)
+    current = txtDisplay.get()
     txtDisplay.delete(0, END)
-    txtDisplay.insert(0, num)
+    txtDisplay.insert(0, current + num)
 
+# clear function
+def button_clear():
+    txtDisplay.delete(0, END)
 
+def button_add():
+    first_num = txtDisplay.get()
+    global f_num
+    f_num = int(first_num)
+    txtDisplay.delete(0, END)
+
+def button_equal():
+    second_num = txtDisplay.get()
+    txtDisplay.delete(0, END)
+    txtDisplay.insert(0, f_num + int(second_num))
+
+# pi number
+# def button_pi():
+#     pi = 3.14159265359
+#     txtDisplay.delete(0, END)
+#     txtDisplay.insert(0, pi)
+
+# fill the grid
 numberpad = "789456123"
 i = 0
 btn = []
@@ -44,7 +66,7 @@ for j in range(2, 5):
         btn[i]["command"]=lambda x=numberpad[i]: button_click(x)
         i+=1
 
-btnClear = Button(calc, text="C", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnClear = Button(calc, text="C", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_clear())
 btnClear.grid(row=1, column=0, pady=1)
 
 btnAllClear = Button(calc, text="CE", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
@@ -53,7 +75,7 @@ btnAllClear.grid(row=1, column=1, pady=1)
 btnSqrRoot = Button(calc, text="√", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
 btnSqrRoot.grid(row=1, column=2, pady=1)
 
-btnAdd = Button(calc, text="+", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnAdd = Button(calc, text="+", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_add())
 btnAdd.grid(row=1, column=3, pady=1)
 
 btnMinus = Button(calc, text="-", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
@@ -74,7 +96,7 @@ btnDot.grid(row=5, column=1, pady=1)
 btnSqr = Button(calc, text="²", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
 btnSqr.grid(row=5, column=3, pady=1)
 
-btnEq = Button(calc, text="=", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#CCA871', fg='#1E1F21')
+btnEq = Button(calc, text="=", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#CCA871', fg='#1E1F21', command=lambda:button_equal())
 btnEq.grid(row=5, column=2, pady=1)
 
 btnPi = Button(calc, text="π", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
