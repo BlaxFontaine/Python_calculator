@@ -34,10 +34,25 @@ bases = {'Binary', 'Octal', 'Decimal', 'Hexadecimal'}
 tkvar.set('Decimal')
 
 popupMenu = OptionMenu(calc, tkvar, *bases)
+popupMenu.config(bg='#1E1F21', fg='#CCA871', font=("Courier"))
 popupMenu.grid(row=0, column=0)
+
+task = None
 # on change dropdown value
 def change_dropdown(*args):
     print( tkvar.get() )
+    chosen_base = tkvar.get()
+    num = int(float(txtDisplay.get()))
+    txtDisplay.delete(0, END)
+
+    if chosen_base == "Binary":
+        txtDisplay.insert(0, bin(num)[2:])
+    if chosen_base == "Octal":
+        txtDisplay.insert(0, int(num, 8))
+    if chosen_base == "Decimal":
+        txtDisplay.insert(0, int(num, 10))
+    if chosen_base == "Hexadecimal":
+        txtDisplay.insert(0, hex(num)[2:])
 
 # link function to change dropdown
 tkvar.trace('w', change_dropdown)
@@ -64,6 +79,8 @@ def button_equal():
     second_num = txtDisplay.get()
     txtDisplay.delete(0, END)
 
+    print(type(second_num))
+
     if task == "add":
         txtDisplay.insert(0, f_num + float(second_num))
     if task == "sub":
@@ -72,6 +89,8 @@ def button_equal():
         txtDisplay.insert(0, f_num * float(second_num))
     if task == "div":
         txtDisplay.insert(0, f_num / float(second_num))
+    if task is None:
+        txtDisplay.insert(0, int(float(second_num)))
 
 def button_square():
     sq = float(txtDisplay.get())
@@ -156,6 +175,12 @@ btnTan.grid(row=1, column=7, pady=1)
 
 btnExp = Button(calc, text="Exp", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_math("exp"))
 btnExp.grid(row=2, column=4, pady=1)
+
+btnOpenPar = Button(calc, text="(", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnOpenPar.grid(row=3, column=4, pady=1)
+
+btnClosePar = Button(calc, text="(", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnClosePar.grid(row=4, column=4, pady=1)
 
 # display window
 window.mainloop()
