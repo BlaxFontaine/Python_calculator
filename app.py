@@ -28,6 +28,20 @@ txtDisplay = Entry(calc, font=("Courier", 20, "bold"), bg='#1E1F21', fg='#CCA871
 txtDisplay.grid(row=0, column=0, columnspan=9, pady=1)
 txtDisplay.insert(0, "")
 
+# Drop down to change bases
+tkvar = StringVar(window)
+bases = {'Binary', 'Octal', 'Decimal', 'Hexadecimal'}
+tkvar.set('Decimal')
+
+popupMenu = OptionMenu(calc, tkvar, *bases)
+popupMenu.grid(row=0, column=0)
+# on change dropdown value
+def change_dropdown(*args):
+    print( tkvar.get() )
+
+# link function to change dropdown
+tkvar.trace('w', change_dropdown)
+
 # function on click
 def button_click(num):
     current = txtDisplay.get()
@@ -43,7 +57,7 @@ def button_operation(op):
     global f_num
     global task
     task = op
-    f_num = int(float(first_num))
+    f_num = float(first_num)
     txtDisplay.delete(0, END)
 
 def button_equal():
@@ -51,20 +65,33 @@ def button_equal():
     txtDisplay.delete(0, END)
 
     if task == "add":
-        txtDisplay.insert(0, f_num + int(second_num))
+        txtDisplay.insert(0, f_num + float(second_num))
     if task == "sub":
-        txtDisplay.insert(0, f_num - int(second_num))
+        txtDisplay.insert(0, f_num - float(second_num))
     if task == "multi":
-        txtDisplay.insert(0, f_num * int(second_num))
+        txtDisplay.insert(0, f_num * float(second_num))
     if task == "div":
-        txtDisplay.insert(0, f_num / int(second_num))
+        txtDisplay.insert(0, f_num / float(second_num))
 
 def button_square():
-    sq = int(txtDisplay.get())
+    sq = float(txtDisplay.get())
     txtDisplay.delete(0, END)
     txtDisplay.insert(0, sq * sq)
 
-# pi number
+def button_math(func):
+    num = float(txtDisplay.get())
+    txtDisplay.delete(0, END)
+
+    if func == "cos":
+        txtDisplay.insert(0, math.cos(num))
+    if func == "sin":
+        txtDisplay.insert(0, math.sin(num))
+    if func == "tan":
+        txtDisplay.insert(0, math.tan(num))
+    if func == "exp":
+        txtDisplay.insert(0, math.exp(num))
+
+
 def button_pi():
     pi = math.pi
     txtDisplay.delete(0, END)
@@ -118,15 +145,17 @@ btnEq.grid(row=5, column=2, pady=1)
 btnPi = Button(calc, text="π", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_pi())
 btnPi.grid(row=1, column=4, pady=1)
 
-btnSin = Button(calc, text="Sin", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnSin = Button(calc, text="Sin", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_math("sin"))
 btnSin.grid(row=1, column=5, pady=1)
 
-btnCos = Button(calc, text="Cos", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnCos = Button(calc, text="Cos", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_math("cos"))
 btnCos.grid(row=1, column=6, pady=1)
 
-btnTan = Button(calc, text="Tan", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871')
+btnTan = Button(calc, text="Tan", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_math("tan"))
 btnTan.grid(row=1, column=7, pady=1)
 
+btnExp = Button(calc, text="Exp", width=6, height=2, font=("Courier", 20, "bold"), bd=1, bg='#1E1F21', fg='#CCA871', command=lambda:button_math("exp"))
+btnExp.grid(row=2, column=4, pady=1)
 
 # display window
 window.mainloop()
